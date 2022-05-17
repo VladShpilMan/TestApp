@@ -24,6 +24,7 @@ class MainClass
             return default;
         }
     }
+
     private static decimal GetPayoutAmount(DateTime dateAgreement, DateTime dateCalculation, decimal X, decimal R)
     {
         if (X < 0)
