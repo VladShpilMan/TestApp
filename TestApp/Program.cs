@@ -2,20 +2,17 @@
 
 class MainClass
 {
-    private const int YEAR = 365;
-
-    public static decimal GetDays(DateTime start, DateTime end)
+    public static int GetMonths(DateTime start, DateTime end)
     {
-        decimal days = default;
+        int months = default;
 
         try
         {
-            days = (decimal)(end - start).TotalDays;
-                
-            if(days <= 0) throw new ArgumentException("Wrong dates entered.");
+            months = (end.Month + end.Year * 12) - (start.Month + start.Year * 12);
 
+            if (months <= 0) throw new ArgumentException("Wrong dates entered.");
 
-            return days;
+            return months;
         }
         catch (ArgumentException e)
         {
@@ -34,17 +31,19 @@ class MainClass
 
         if (R < 0)
         {
-            throw new ArgumentException("Interest rate can't be less or null", nameof(X));
+            throw new ArgumentException("Interest rate can't be less or null", nameof(R));
         }
 
-        decimal sum = 0M;
+        decimal paymentAmount = default;
 
-        sum = (X * R * GetDays(dateAgreement, dateCalculation)) / (100 * YEAR);
+        double a = (double)(1 + R);
 
-        return Math.Round(sum, 4);
+        paymentAmount = X * (R * (decimal)Math.Pow((double)(1 + R), GetMonths(dateAgreement, dateCalculation))) / (((decimal)Math.Pow(a, GetMonths(dateAgreement, dateCalculation)) - 1));
+
+        return Math.Round((decimal)paymentAmount, 2);
     }
     static void Main()
     {
-        Console.WriteLine("The amount of all payments: " + GetPayoutAmount(new DateTime(2022, 3, 14), new DateTime(2022, 5, 14), 350000, 4.7M));
+        Console.WriteLine("The payment amount: " + GetPayoutAmount(new DateTime(2022, 3, 14), new DateTime(2023, 3, 14), 350000, 4.7M / 12 / 100));
     }
 }
