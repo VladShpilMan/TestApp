@@ -4,16 +4,17 @@ using System.Text;
 
 namespace TestApp
 {
-    class InvestmentCalculator
+    public class InvestmentCalculator
     {
         #region Properties
         public decimal Investment { get; private set; }
-        private decimal PaymentAmount { get; set; }
+        public decimal PaymentAmount { get; private set; }
         public decimal Rate { get; private set; }
         public DateTime DateAgreement { get; private set; }
         public DateTime DateCalculation { get; private set; }
         #endregion
 
+        #region Constructors
         public InvestmentCalculator()
         {
             this.Investment = 350000M;
@@ -29,6 +30,9 @@ namespace TestApp
             this.DateAgreement = DateAgreement;
             this.DateCalculation = DateCalculation;
         }
+        #endregion
+
+        #region Methods
 
         public void GetPayoutAmount()
         {
@@ -75,6 +79,8 @@ namespace TestApp
                                  $"Payment Amount: {Math.Round(this.PaymentAmount, 2)}$"
                                 );
         }
+
+        #endregion
     }
 }
 
